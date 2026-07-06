@@ -12,3 +12,9 @@ dist/
 
 # OS
 .DS_Store
+
+# Virtual environment
+backend/.venv/
+
+# vs code
+.vscode/
