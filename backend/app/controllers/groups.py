@@ -81,6 +81,7 @@ def add_member(
     group_id: int,
     payload: GroupMemberAdd,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
     group = (
         db.query(Group)
