@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.controllers import auth, groups
+from app.controllers import auth, groups, expenses, settlements
 from app.core.database import Base, engine
 
 Base.metadata.create_all(bind=engine)
@@ -20,6 +20,8 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(groups.router)
+app.include_router(expenses.router)
+app.include_router(settlements.router)
 
 
 @app.get("/")
