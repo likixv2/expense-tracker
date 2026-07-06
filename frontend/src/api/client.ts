@@ -27,8 +27,22 @@ export const api = {
   register: (data: { name: string; email: string; password: string }) =>
     request("/auth/register", { method: "POST", body: JSON.stringify(data) }),
 
-  login: (data: { email: string; password: string }) =>
-    request("/auth/login", { method: "POST", body: JSON.stringify(data) }),
+  login: (data: { email: string; password: string }) => {
+    const form = new URLSearchParams();
+    form.append("username", data.email);
+    form.append("password", data.password);
+    return fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: form,
+    }).then(async (res) => {
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: res.statusText }));
+        throw new Error(err.detail || "Login failed");
+      }
+      return res.json();
+    });
+  },
 
   createGroup: (name: string) =>
     request("/groups", { method: "POST", body: JSON.stringify({ name }) }),
