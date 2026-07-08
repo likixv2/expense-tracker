@@ -65,8 +65,13 @@ export const api = {
 
   listGroups: () => request("/groups"),
 
-  listUsers: (search?: string) =>
-    request(`/users${search ? `?search=${encodeURIComponent(search)}` : ""}`),
+  listUsers: (search?: string) => {
+    console.log("listUsers called with:", search);
+    console.trace("Called from");
+    return request(
+      `/users${search ? `?search=${encodeURIComponent(search)}` : ""}`
+  );
+},
 
   getGroup: (id: number) => request(`/groups/${id}`),
 
